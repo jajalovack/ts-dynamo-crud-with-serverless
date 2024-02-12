@@ -1,6 +1,6 @@
 service: ts-dynamo-crud-with-serverless
-# app:
-# org:
+# app: 
+# org: 
 
 plugins:
   - serverless-esbuild # used for compiling/packaging the Typescript code

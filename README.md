@@ -3,14 +3,17 @@
 ## Getting Started
 
 Install dependencies.
+
 ``` pnpm install ```
 
 Set up the environment. Edit with the proper credentials.
+
 ``` cp .env.example .env ```
 
 ## Testing
 
 To start run
+
 ``` serverless offline ```
 
 ### Routes

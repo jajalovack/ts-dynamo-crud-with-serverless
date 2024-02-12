@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-const TABLE_NAME = process.env.TABLE_NAME || 'node-aws';
+const TABLE_NAME = process.env.DYNAMODB_TABLE || 'node-aws';
 const ACCESS_KEY_ID = process.env.ACCESS_KEY_ID;
 const SECRET_ACCESS_KEY = process.env.SECRET_ACCESS_KEY;
 const REGION = process.env.REGION;

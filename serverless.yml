@@ -1,0 +1,65 @@
+service: ts-dynamo-crud-with-serverless
+
+plugins:
+  - serverless-esbuild # used for compiling/packaging the Typescript code
+  - serverless-offline # used for local execution
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ap-southeast-1
+  stage: dev
+  timeout: 30   # repository wide Lambda timeout
+  environment:  # repository wide Lambda env variables
+    STAGE: dev
+
+custom:
+  customVariable1: Hello, World!
+
+functions:
+  # Serverless Framework specific syntax
+  Function1:
+    handler: ./src/tests/lambda1.handler
+    events:
+      - httpApi:
+          path: /api/Function1
+          method: GET
+    environment:
+      CUSTOM_VAR: ${self:custom.customVariable1}
+
+  Function2:
+    handler: ./src/tests/lambda2.handler
+    timeout: 10        # override global setting
+    memorySize: 2048   # override default 512 Mb
+    events:
+      - schedule:
+          rate: cron(0 12 * * ? *) # triggers every 12 hours
+          enabled: true
+
+  Function3:
+    handler: ./src/functions/get.handler
+    events:
+      - httpApi:
+          path: /api/items
+          method: GET
+
+  Function4:
+    handler: ./src/functions/getById.handler
+    events:
+      - httpApi:
+          path: /api/items/{id}
+          method: GET
+
+  Function5:
+    handler: ./src/functions/put.handler
+    events:
+      - httpApi:
+          path: /api/items
+          method: PUT
+
+  Function6:
+    handler: ./src/functions/delete.handler
+    events:
+      - httpApi:
+          path: /api/items/{id}
+          method: DELETE

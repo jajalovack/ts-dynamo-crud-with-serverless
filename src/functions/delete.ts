@@ -1,0 +1,34 @@
+import { dynamodb, TABLE_NAME } from "../config";
+const tableName = TABLE_NAME;
+
+export const handler = async (event: any, context: any) => {
+  let body;
+  let statusCode = 200;
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
+  try {
+    await dynamodb.delete(
+      {
+        TableName: tableName,
+        Key: {
+          id: String(event.pathParameters.id),
+        },
+      }
+    ).promise();
+    body = `Deleted item ${event.pathParameters.id}`;
+  } catch (err: any) {
+    statusCode = 400;
+    body = err.message;
+  } finally {
+    body = JSON.stringify(body);
+  }
+
+  return {
+    "statusCode": statusCode,
+    "headers": headers,
+    "body": body,
+    "isBase64Encoded": false
+  };
+};

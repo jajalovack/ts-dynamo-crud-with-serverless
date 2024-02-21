@@ -8,9 +8,9 @@
         "build": "rimraf dist && tsc"
     },
     "dependencies": {
-        "@aws-sdk/client-dynamodb": "^3.507.0",
-        "@aws-sdk/lib-dynamodb": "^3.507.0",
-        "aws-sdk": "^2.1551.0",
+        "@aws-sdk/client-dynamodb": "^3.511.0",
+        "@aws-sdk/credential-providers": "^3.515.0",
+        "@aws-sdk/lib-dynamodb": "^3.511.0",
         "axios": "^1.6.7",
         "dotenv": "^16.4.2",
         "express": "^4.18.2",

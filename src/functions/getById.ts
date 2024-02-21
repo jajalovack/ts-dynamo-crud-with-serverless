@@ -1,3 +1,4 @@
+import { GetCommand } from "@aws-sdk/lib-dynamodb";
 import { dynamodb, TABLE_NAME } from "../config";
 
 const tableName = TABLE_NAME;
@@ -10,14 +11,14 @@ export const handler = async (event: any, context: any) => {
   };
 
   try {
-    body = await dynamodb.get(
-      {
-        TableName: tableName,
-        Key: {
-          id: event.pathParameters.id,
-        },
-      }
-    ).promise();
+    body = await dynamodb.send(
+      new GetCommand({
+          TableName: tableName,
+          Key: {
+            id: event.pathParameters.id,
+          },
+        })
+    );
     body = body.Item;
     if (!body)
     {

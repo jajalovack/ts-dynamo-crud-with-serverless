@@ -1,13 +1,5 @@
+import { PutCommand } from "@aws-sdk/lib-dynamodb";
 import { dynamodb, TABLE_NAME } from "../config";
-// import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-// import {
-//   DynamoDBDocumentClient,
-//   PutCommand,
-// } from "@aws-sdk/lib-dynamodb";
-
-// const client = new DynamoDBClient({});
-
-// const dynamo = DynamoDBDocumentClient.from(client);
 
 const tableName = TABLE_NAME;
 
@@ -19,16 +11,16 @@ export const handler = async (event: any, context: any) => {
   };
 
   try {
-    await dynamodb.put(
-      {
+    await dynamodb.send(
+      new PutCommand({
         TableName: tableName,
         Item: {
           id: body.id,
           price: body.price,
           name: body.name,
         },
-      }
-    ).promise();
+      })
+    );
     body = `Put item ${body.id}`;
   } catch (err: any) {
     statusCode = 400;

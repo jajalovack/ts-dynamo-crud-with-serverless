@@ -1,6 +1,6 @@
 service: ts-dynamo-crud-with-serverless
-# app: 
-# org: 
+app: ts-dynamo-crud-with-serverless
+org: jajalovack
 
 plugins:
   - serverless-esbuild # used for compiling/packaging the Typescript code
@@ -15,6 +15,7 @@ provider:
   environment:  # repository wide Lambda env variables
     STAGE: dev
     DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+    REGION: ap-southeast-1
   iam:
     role:
       statements:
@@ -55,7 +56,7 @@ functions:
   Function1:
     handler: ./src/tests/lambda1.handler
     events:
-      - httpApi:
+      - http:
           path: /api/Function1
           method: GET
     environment:
@@ -73,27 +74,27 @@ functions:
   Function3:
     handler: ./src/functions/get.handler
     events:
-      - httpApi:
+      - http:
           path: /api/items
           method: GET
 
   Function4:
     handler: ./src/functions/getById.handler
     events:
-      - httpApi:
+      - http:
           path: /api/items/{id}
           method: GET
 
   Function5:
     handler: ./src/functions/put.handler
     events:
-      - httpApi:
+      - http:
           path: /api/items
           method: PUT
 
   Function6:
     handler: ./src/functions/delete.handler
     events:
-      - httpApi:
+      - http:
           path: /api/items/{id}
           method: DELETE

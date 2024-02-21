@@ -1,4 +1,6 @@
+import { DeleteCommand } from "@aws-sdk/lib-dynamodb";
 import { dynamodb, TABLE_NAME } from "../config";
+
 const tableName = TABLE_NAME;
 
 export const handler = async (event: any, context: any) => {
@@ -9,14 +11,14 @@ export const handler = async (event: any, context: any) => {
   };
 
   try {
-    await dynamodb.delete(
-      {
-        TableName: tableName,
-        Key: {
-          id: String(event.pathParameters.id),
-        },
-      }
-    ).promise();
+    await dynamodb.send(
+      new DeleteCommand({
+          TableName: tableName,
+          Key: {
+            id: String(event.pathParameters.id),
+          },
+        })
+    );
     body = `Deleted item ${event.pathParameters.id}`;
   } catch (err: any) {
     statusCode = 400;

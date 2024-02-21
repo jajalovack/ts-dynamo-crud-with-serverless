@@ -1,3 +1,4 @@
+import { ScanCommand } from "@aws-sdk/lib-dynamodb";
 import { dynamodb, TABLE_NAME } from "../config";
 
 const tableName = TABLE_NAME;
@@ -10,9 +11,9 @@ export const handler = async (event: any, context: any) => {
   };
 
   try {
-    body = await dynamodb.scan(
-      { TableName: tableName }
-    ).promise();
+    body = await dynamodb.send(
+      new ScanCommand({ TableName: tableName })
+    );
     body = body.Items;
   } catch (err: any) {
     statusCode = 400;

@@ -1,14 +1,10 @@
-import AWS from 'aws-sdk';
+import { fromEnv } from "@aws-sdk/credential-providers"
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb"
 import { config } from './config';
 
-AWS.config.update({
-    region: config.aws_remote_config.region,
-    accessKeyId: config.aws_remote_config.accessKeyId,
-    secretAccessKey: config.aws_remote_config.secretAccessKey
-});
-
 const TABLE_NAME = config.TABLE_NAME;
-const dynamodb = new AWS.DynamoDB.DocumentClient();
+const client = new DynamoDBClient({credentials: fromEnv()})
+const dynamodb = DynamoDBDocumentClient.from(client)
 
 export { dynamodb, TABLE_NAME }
